@@ -4,7 +4,7 @@ import com.devturing.forum.model.Curso
 import org.springframework.stereotype.Service
 
 @Service
-class CursoService (private var cursos: List<Curso>) {
+class CursoService(private var cursos: List<Curso>) {
 
     init {
         cursos = listOf(

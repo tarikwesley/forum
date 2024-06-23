@@ -2,7 +2,7 @@ package com.devturing.forum.model
 
 import java.time.LocalDateTime
 
-data class Resposta (
+data class Resposta(
     val id: Long? = null,
     val mensagem: String,
     val dataCriacao: LocalDateTime = LocalDateTime.now(),

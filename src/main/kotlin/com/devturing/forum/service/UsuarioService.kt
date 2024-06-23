@@ -8,10 +8,10 @@ class UsuarioService(private var usuarios: List<Usuario>) {
 
     init {
         val usuario = Usuario(
-                id = 1,
-                nome = "Lucas",
-                email = "lucas@gmail.com"
-            )
+            id = 1,
+            nome = "Lucas",
+            email = "lucas@gmail.com"
+        )
         usuarios = listOf(usuario)
     }
 
