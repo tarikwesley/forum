@@ -1,8 +1,8 @@
 package com.devturing.forum.controller
 
+import com.devturing.forum.dto.AtualizacaoTopicoForm
 import com.devturing.forum.dto.NovoTopicoForm
 import com.devturing.forum.dto.TopicoView
-import com.devturing.forum.model.Topico
 import com.devturing.forum.service.TopicoService
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
@@ -22,7 +22,17 @@ class TopicoController(private val topicoService: TopicoService) {
     }
 
     @PostMapping
-    fun cadastrar(@RequestBody @Valid topico: NovoTopicoForm) {
-        topicoService.cadastrar(topico)
+    fun cadastrar(@RequestBody @Valid form: NovoTopicoForm) {
+        topicoService.cadastrar(form)
+    }
+
+    @PutMapping
+    fun atualizar(@RequestBody @Valid form: AtualizacaoTopicoForm) {
+        topicoService.atualizar(form)
+    }
+
+    @DeleteMapping("/{id}")
+    fun deletar(@PathVariable id: Long) {
+        topicoService.deletar(id)
     }
 }
