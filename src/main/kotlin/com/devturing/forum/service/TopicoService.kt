@@ -3,6 +3,7 @@ package com.devturing.forum.service
 import com.devturing.forum.dto.AtualizacaoTopicoForm
 import com.devturing.forum.dto.NovoTopicoForm
 import com.devturing.forum.dto.TopicoView
+import com.devturing.forum.exception.NotFounndException
 import com.devturing.forum.mapper.TopicoFormMapper
 import com.devturing.forum.mapper.TopicoViewMapper
 import com.devturing.forum.model.Topico
@@ -19,9 +20,10 @@ class TopicoService(
         return topicos.map { t -> topicoViewMapper.map(t) }
     }
 
-    fun buscarPorId(id: Long): List<TopicoView> {
-        val topico = topicos.filter { it.id == id }
-        return topico.map { t -> topicoViewMapper.map(t) }
+    fun buscarPorId(id: Long): TopicoView {
+        val topico = topicos.stream().filter { it.id == id }.findFirst()
+            .orElseThrow { NotFounndException("Topico não encontrado!") }
+        return topicoViewMapper.map(topico)
     }
 
     fun cadastrar(form: NovoTopicoForm): TopicoView {
@@ -32,7 +34,8 @@ class TopicoService(
     }
 
     fun atualizar(form: AtualizacaoTopicoForm): TopicoView {
-        val topico = topicos.first { it.id == form.id }
+        val topico = topicos.stream().filter { it.id == form.id }.findFirst()
+            .orElseThrow { NotFounndException("Topico não encontrado!") }
         val topicoAtualizado = Topico(
             id = form.id,
             titulo = form.titulo,
@@ -48,7 +51,8 @@ class TopicoService(
     }
 
     fun deletar(id: Long) {
-        val topico = topicos.first { it.id == id }
+        val topico = topicos.stream().filter { it.id == id }.findFirst()
+            .orElseThrow { throw NotFounndException("Topico não encontrado!") }
         topicos = topicos.minus(topico)
     }
 }

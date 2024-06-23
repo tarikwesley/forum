@@ -20,7 +20,7 @@ class TopicoController(private val topicoService: TopicoService) {
     }
 
     @GetMapping("/{id}")
-    fun buscarPorId(@PathVariable id: Long): List<TopicoView> {
+    fun buscarPorId(@PathVariable id: Long): TopicoView {
         return topicoService.buscarPorId(id)
     }
 
