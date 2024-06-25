@@ -16,8 +16,8 @@ import org.springframework.web.util.UriComponentsBuilder
 class TopicoController(private val topicoService: TopicoService) {
 
     @GetMapping
-    fun listar(): List<TopicoView> {
-        return topicoService.listar()
+    fun listar(@RequestParam(required = false) nomeCurso: String?): List<TopicoView> {
+        return topicoService.listar(nomeCurso)
     }
 
     @GetMapping("/{id}")

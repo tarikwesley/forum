@@ -17,8 +17,13 @@ class TopicoService(
     private val topicoFormMapper: TopicoFormMapper
 ) {
 
-    fun listar(): List<TopicoView> {
-        return topicoRepository.findAll().map { t -> topicoViewMapper.map(t) }
+    fun listar(nomeCurso: String?): List<TopicoView> {
+        val topicos = if (nomeCurso == null) {
+            topicoRepository.findAll()
+        } else {
+            topicoRepository.findByCursoNome(nomeCurso)
+        }
+        return topicos.map { t -> topicoViewMapper.map(t) }
     }
 
     fun buscarPorId(id: Long): TopicoView {
