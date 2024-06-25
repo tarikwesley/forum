@@ -6,6 +6,8 @@ import com.devturing.forum.dto.TopicoView
 import com.devturing.forum.service.TopicoService
 import jakarta.transaction.Transactional
 import jakarta.validation.Valid
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -20,6 +22,7 @@ import org.springframework.web.util.UriComponentsBuilder
 class TopicoController(private val topicoService: TopicoService) {
 
     @GetMapping
+    @Cacheable("topicos")
     fun listar(
         @RequestParam(required = false) nomeCurso: String?,
         @PageableDefault(
@@ -39,6 +42,7 @@ class TopicoController(private val topicoService: TopicoService) {
 
     @PostMapping
     @Transactional
+    @CacheEvict("topicos", allEntries = true)
     fun cadastrar(
         @RequestBody @Valid form: NovoTopicoForm,
         uriBuilder: UriComponentsBuilder
@@ -50,12 +54,14 @@ class TopicoController(private val topicoService: TopicoService) {
 
     @PutMapping
     @Transactional
+    @CacheEvict("topicos", allEntries = true)
     fun atualizar(@RequestBody @Valid form: AtualizacaoTopicoForm): ResponseEntity<TopicoView> {
         return ResponseEntity.ok(topicoService.atualizar(form))
     }
 
     @DeleteMapping("/{id}")
     @Transactional
+    @CacheEvict("topicos", allEntries = true)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deletar(@PathVariable id: Long) {
         topicoService.deletar(id)
