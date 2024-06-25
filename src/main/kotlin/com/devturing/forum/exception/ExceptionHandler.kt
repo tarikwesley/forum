@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 @RestControllerAdvice
 class ExceptionHandler {
 
-    @ExceptionHandler(NotFounndException::class)
+    @ExceptionHandler(NotFoundException::class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    fun handlerNotFound(exception: NotFounndException, request: HttpServletRequest): ErrorView {
+    fun handlerNotFound(exception: NotFoundException, request: HttpServletRequest): ErrorView {
         return ErrorView(
             status = HttpStatus.NOT_FOUND.value(),
             error = HttpStatus.NOT_FOUND.name,

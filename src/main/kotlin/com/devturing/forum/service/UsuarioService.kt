@@ -1,21 +1,14 @@
 package com.devturing.forum.service
 
+import com.devturing.forum.exception.NotFoundException
 import com.devturing.forum.model.Usuario
+import com.devturing.forum.repository.UsuarioRepository
 import org.springframework.stereotype.Service
 
 @Service
-class UsuarioService(private var usuarios: List<Usuario>) {
-
-    init {
-        val usuario = Usuario(
-            id = 1,
-            nome = "Lucas",
-            email = "lucas@gmail.com"
-        )
-        usuarios = listOf(usuario)
-    }
+class UsuarioService(private val repository: UsuarioRepository) {
 
     fun buscarPorId(id: Long): Usuario {
-        return usuarios.filter { it.id == id }.first()
+        return repository.findById(id).orElseThrow { throw NotFoundException("Usuario não encontrado!") }
     }
 }
