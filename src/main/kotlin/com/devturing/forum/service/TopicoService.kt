@@ -2,6 +2,7 @@ package com.devturing.forum.service
 
 import com.devturing.forum.dto.AtualizacaoTopicoForm
 import com.devturing.forum.dto.NovoTopicoForm
+import com.devturing.forum.dto.TopicoPorCategoriaDto
 import com.devturing.forum.dto.TopicoView
 import com.devturing.forum.exception.NotFoundException
 import com.devturing.forum.mapper.TopicoFormMapper
@@ -57,5 +58,9 @@ class TopicoService(
 
     fun deletar(id: Long) {
         topicoRepository.deleteById(id)
+    }
+
+    fun relatorio(): List<TopicoPorCategoriaDto> {
+        return topicoRepository.relatorio()
     }
 }

@@ -2,6 +2,7 @@ package com.devturing.forum.controller
 
 import com.devturing.forum.dto.AtualizacaoTopicoForm
 import com.devturing.forum.dto.NovoTopicoForm
+import com.devturing.forum.dto.TopicoPorCategoriaDto
 import com.devturing.forum.dto.TopicoView
 import com.devturing.forum.service.TopicoService
 import jakarta.transaction.Transactional
@@ -38,6 +39,11 @@ class TopicoController(private val topicoService: TopicoService) {
     @GetMapping("/{id}")
     fun buscarPorId(@PathVariable id: Long): TopicoView {
         return topicoService.buscarPorId(id)
+    }
+
+    @GetMapping("/relatorio")
+    fun relatorio(): List<TopicoPorCategoriaDto>{
+        return topicoService.relatorio()
     }
 
     @PostMapping
